@@ -22,6 +22,7 @@ export interface Event {
   capacity?: string;
   organizer?: string;
   contact?: string;
+  googleMap?: string;
 }
 
 export interface NewsItem {
@@ -136,6 +137,7 @@ export const getPickupEvent = async () => {
         capacity: item.capacity || item['定員'] || '',
         organizer: item.organizer || item['主催'] || '',
         contact: item.contact || item['お問い合わせ先'] || '',
+        googleMap: item.googleMap || item['GoogleMap'] || '',
       } as Event;
     });
     

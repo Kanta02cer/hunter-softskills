@@ -222,22 +222,7 @@ export default function EventDetailPage() {
                 <p className="text-gray-700 leading-relaxed" data-microcms-field="event.description">{event.description}</p>
               </div>
 
-              {/* Detail Description */}
-              {event.detailDescription && (
-                <div>
-                  <h2 className="text-2xl font-bold mb-4 text-gray-900 flex items-center">
-                    <div className="w-8 h-8 flex items-center justify-center bg-orange-50 rounded-lg mr-3">
-                      <i className="ri-information-line text-[#FF8C00]"></i>
-                    </div>
-                    詳細説明
-                  </h2>
-                  <div 
-                    className="prose prose-sm max-w-none text-gray-700"
-                    dangerouslySetInnerHTML={{ __html: event.detailDescription }}
-                    data-microcms-field="event.detailDescription"
-                  />
-                </div>
-              )}
+              {/* Detail Description Removed as per requirement */}
 
               {/* Schedule */}
               {event.schedule && (
@@ -246,13 +231,47 @@ export default function EventDetailPage() {
                     <div className="w-8 h-8 flex items-center justify-center bg-orange-50 rounded-lg mr-3">
                       <i className="ri-time-line text-[#FF8C00]"></i>
                     </div>
-                    スケジュール
+                    当日スケジュール
                   </h2>
                   <div 
                     className="prose prose-sm max-w-none text-gray-700"
                     dangerouslySetInnerHTML={{ __html: event.schedule }}
                     data-microcms-field="event.schedule"
                   />
+                </div>
+              )}
+
+              {/* Venue & Map */}
+              {(event.googleMap || event.location) && (
+                <div>
+                  <h2 className="text-2xl font-bold mb-4 text-gray-900 flex items-center">
+                    <div className="w-8 h-8 flex items-center justify-center bg-orange-50 rounded-lg mr-3">
+                      <i className="ri-map-pin-line text-[#FF8C00]"></i>
+                    </div>
+                    会場アクセス
+                  </h2>
+                  <div className="bg-gray-50 rounded-xl overflow-hidden border border-gray-100">
+                    <div className="p-4 border-b border-gray-100">
+                      <p className="font-bold text-gray-900 flex items-center">
+                        <i className="ri-building-line mr-2 text-gray-500"></i>
+                        {event.location}
+                      </p>
+                    </div>
+                    {event.googleMap ? (
+                      <div 
+                        className="aspect-video w-full"
+                        dangerouslySetInnerHTML={{ __html: event.googleMap.replace(/width="\d+"/, 'width="100%"').replace(/height="\d+"/, 'height="100%"') }}
+                        data-microcms-field="event.googleMap"
+                      />
+                    ) : (
+                      <div className="aspect-video w-full bg-gray-200 flex items-center justify-center text-gray-500">
+                        <div className="text-center">
+                          <i className="ri-map-off-line text-3xl mb-2"></i>
+                          <p>地図情報は利用できません</p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
             </div>
@@ -352,8 +371,8 @@ export default function EventDetailPage() {
               onClick={() => navigate('/')}
               className="inline-flex items-center"
             >
-              <i className="ri-arrow-left-line mr-2"></i>
-              イベント一覧に戻る
+              <i className="ri-home-4-line mr-2"></i>
+              トップページに戻る
             </Button>
           </div>
         </div>

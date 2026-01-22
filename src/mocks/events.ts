@@ -104,7 +104,8 @@ export const upcomingEvents = [
     target: '全対象',
     capacity: '100名',
     organizer: '主催者名',
-    contact: 'contact@example.com'
+    contact: 'contact@example.com',
+    googleMap: '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3240.828030777598!2d139.767123!3d35.681236!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188bfbd89f7dd3%3A0x5352048e5b64000!2sTokyo%20Station!5e0!3m2!1sen!2sjp!4v1700000000000!5m2!1sen!2sjp" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>'
   }
 ];
 
