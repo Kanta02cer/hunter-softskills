@@ -83,7 +83,7 @@ export const getUpcomingEventById = async (id: string) => {
     });
     return response as Event;
   } catch (error) {
-    console.error('Failed to fetch event:', error);
+    // 404エラーの場合は静かにnullを返す（フォールバック用）
     return null;
   }
 };
@@ -124,14 +124,14 @@ export const getPickupEvent = async () => {
       return {
         id: item.id,
         title: item.title || '',
-        description: item.description || '',
-        date: item.date || item['開催日程'] || '',
+        description: item.description || item.detail || item['概要'] || '',
+        date: item.date || item['開催日程'] || '', // 日付フィールドがない場合はscheduleの冒頭などを使う検討が必要だが、一旦date優先
         location: item.location || item['場所'] || '',
-        price: item.price || item['参加費'] || '',
+        price: item.price || item.benefit || item['参加費'] || '',
         category: item.category || item['カテゴリー'] || '',
         image: imageData || { url: '' }, // 画像がない場合は空のurlを設定
-        detailDescription: item.detailDescription || item['詳細説明'] || '',
-        schedule: item.schedule || '',
+        detailDescription: item.detailDescription || item.detaildescription || item['詳細説明'] || '',
+        schedule: item.schedule || item['開催日程'] || '',
         target: item.target || item['対象者'] || '',
         capacity: item.capacity || item['定員'] || '',
         organizer: item.organizer || item['主催'] || '',
@@ -145,7 +145,7 @@ export const getPickupEvent = async () => {
     if (error instanceof Error && error.message.includes('404')) {
       return [];
     }
-    console.error('Failed to fetch pickup event:', error);
+    // console.error('Failed to fetch pickup event:', error);
     return [];
   }
 };

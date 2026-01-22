@@ -48,13 +48,15 @@ export default function EventDetailPage() {
           if (mockEvent) {
             setEvent({
               ...mockEvent,
+              id: mockEvent.id.toString(),
               image: { url: mockEvent.image }
-            } as Event);
+            } as unknown as Event); // Force cast for now if other fields mismatch, but primarily fix ID
           } else if (featuredEvent.id.toString() === eventId) {
             setEvent({
               ...featuredEvent,
+              id: featuredEvent.id.toString(),
               image: { url: featuredEvent.image }
-            } as Event);
+            } as unknown as Event);
           }
         }
       } catch (error) {
@@ -62,15 +64,17 @@ export default function EventDetailPage() {
         // エラー時はモックデータを使用
         const mockEvent = mockUpcomingEvents.find(e => e.id.toString() === eventId);
         if (mockEvent) {
-          setEvent({
+            setEvent({
             ...mockEvent,
+            id: mockEvent.id.toString(),
             image: { url: mockEvent.image }
-          } as Event);
+          } as unknown as Event);
         } else if (featuredEvent.id.toString() === eventId) {
           setEvent({
             ...featuredEvent,
+            id: featuredEvent.id.toString(),
             image: { url: featuredEvent.image }
-          } as Event);
+          } as unknown as Event);
         }
       } finally {
         setIsLoading(false);
@@ -300,6 +304,44 @@ export default function EventDetailPage() {
                   <p className="text-sm text-gray-700 whitespace-pre-line" data-microcms-field="event.contact">{event.contact}</p>
                 </div>
               )}
+
+              {/* Add to Calendar */}
+              <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                <h3 className="text-lg font-bold mb-3 text-gray-900 flex items-center">
+                  <div className="w-6 h-6 flex items-center justify-center bg-orange-50 rounded-lg mr-2">
+                    <i className="ri-calendar-event-line text-[#FF8C00] text-sm"></i>
+                  </div>
+                  カレンダーに追加
+                </h3>
+                  <Button
+                    variant="outline"
+                    className="w-full justify-center"
+                    onClick={() => {
+                        // Simple parser for YYYY年MM月DD日
+                        const dateMatch = event.date.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);
+                        let dates = '';
+                        if (dateMatch) {
+                          const y = dateMatch[1];
+                          const m = dateMatch[2].padStart(2, '0');
+                          const d = dateMatch[3].padStart(2, '0');
+                          // Assume all day event for now or 10:00-12:00
+                          dates = `${y}${m}${d}T100000/${y}${m}${d}T180000`; 
+                        }
+                        
+                        const url = new URL('https://www.google.com/calendar/render');
+                        url.searchParams.append('action', 'TEMPLATE');
+                        url.searchParams.append('text', event.title);
+                        if (dates) url.searchParams.append('dates', dates);
+                        url.searchParams.append('details', `詳細: ${window.location.href}\n\n${event.description}`);
+                        url.searchParams.append('location', event.location);
+                        
+                        window.open(url.toString(), '_blank');
+                    }}
+                  >
+                    <i className="ri-google-fill mr-2"></i>
+                    Googleカレンダー
+                  </Button>
+              </div>
             </div>
           </div>
 

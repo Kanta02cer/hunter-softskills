@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Navbar from '../../components/feature/Navbar';
 import Footer from '../../components/feature/Footer';
 import Button from '../../components/base/Button';
-import { getUpcomingEvents, getPastEvents, getNewsItems, getPartners, getPickupEvent, type Event, type NewsItem, type Partner } from '../../lib/microcms';
+import { getUpcomingEvents, getPastEvents, getNewsItems, getPartners, getPickupEvent, type Event, type NewsItem, type Partner, type PastEvent } from '../../lib/microcms';
 import { upcomingEvents as mockUpcomingEvents, pastEvents as mockPastEvents, newsItems as mockNewsItems, featuredEvent } from '../../mocks/events';
 import { sponsors, mockPartners } from '../../mocks/partners';
 
@@ -48,34 +48,29 @@ export default function HomePage() {
         // microCMSからデータが取得できた場合は使用、できない場合はモックデータを使用
         setUpcomingEvents(upcomingData.length > 0 ? upcomingData : mockUpcomingEvents.map(e => ({
           ...e,
+          id: e.id.toString(),
           image: { url: e.image }
-        })));
+        } as unknown as Event)));
         setPastEvents(pastData.length > 0 ? pastData : mockPastEvents.map(e => ({
           ...e,
+          id: e.id.toString(),
           image: { url: e.image }
-        })));
-        setNewsItems(newsData.length > 0 ? newsData : mockNewsItems);
+        } as unknown as PastEvent)));
+        setNewsItems(newsData.length > 0 ? newsData : mockNewsItems.map(n => ({
+          ...n,
+          id: n.id.toString()
+        } as unknown as NewsItem)));
         
         // パートナーと協賛企業を区分け
-        console.log('取得したpartnersData:', partnersData);
-        console.log('partnersDataの件数:', partnersData.length);
-        
         // typeが配列の場合と文字列の場合の両方に対応
         const partnersList = partnersData.filter(p => {
           const typeValue = Array.isArray(p.type) ? p.type[0] : p.type;
-          console.log(`Checking ${p.name}: type="${typeValue}", is partner?`, typeValue === 'partner');
           return typeValue === 'partner';
         });
         const sponsorsList = partnersData.filter(p => {
           const typeValue = Array.isArray(p.type) ? p.type[0] : p.type;
-          console.log(`Checking ${p.name}: type="${typeValue}", is sponsor?`, typeValue === 'sponsor');
           return typeValue === 'sponsor';
         });
-        
-        console.log('協賛企業:', sponsorsList);
-        console.log('協賛企業の件数:', sponsorsList.length);
-        console.log('パートナー団体:', partnersList);
-        console.log('パートナー団体の件数:', partnersList.length);
         
         // 協賛企業の設定
         if (sponsorsList.length > 0) {
@@ -87,7 +82,7 @@ export default function HomePage() {
             name: s.name,
             logo: { url: s.logo },
             type: 'sponsor' as const
-          })));
+          } as unknown as Partner)));
         }
         
         // パートナー団体の設定
@@ -97,20 +92,16 @@ export default function HomePage() {
           // microCMSにpartnerがない場合はモックデータを使用
           setPartners(mockPartners.map(p => ({
             ...p,
+            id: p.id.toString(),
             logo: { url: p.logo },
             type: 'partner' as const
-          })));
+          } as unknown as Partner)));
         }
         
         // PickUpイベント：microCMSから取得できた場合は最初の1件を使用、できない場合はモックデータ
-        console.log('🔍 pickupDataの内容:', pickupData);
-        console.log('🔍 pickupDataの件数:', pickupData.length);
         
         if (pickupData.length > 0) {
           const pickupItem = pickupData[0];
-          console.log('🔍 pickupData[0]:', pickupItem);
-          console.log('🔍 pickupData[0].image:', pickupItem.image);
-          console.log('🔍 pickupData[0].imageのタイプ:', typeof pickupItem.image);
           
           // 画像が存在しない、または空の場合はモックデータの画像を使用
           const hasValidImage = pickupItem.image && 
@@ -130,36 +121,44 @@ export default function HomePage() {
           console.log('⚠️ pickupDataが空のため、モックデータを使用します');
           setPickupEvent({
             ...featuredEvent,
+            id: featuredEvent.id.toString(),
             image: { url: featuredEvent.image }
-          } as Event);
+          } as unknown as Event);
         }
       } catch (error) {
         console.error('Failed to fetch data from microCMS:', error);
         // エラー時はモックデータを使用
         setUpcomingEvents(mockUpcomingEvents.map(e => ({
           ...e,
+          id: e.id.toString(),
           image: { url: e.image }
-        })));
+        } as unknown as Event)));
         setPastEvents(mockPastEvents.map(e => ({
           ...e,
+          id: e.id.toString(),
           image: { url: e.image }
-        })));
-        setNewsItems(mockNewsItems);
+        } as unknown as PastEvent)));
+        setNewsItems(mockNewsItems.map(n => ({
+          ...n,
+          id: n.id.toString()
+        } as unknown as NewsItem)));
         setPartners(mockPartners.map(p => ({
           ...p,
+          id: p.id.toString(),
           logo: { url: p.logo },
           type: 'partner' as const
-        })));
+        } as unknown as Partner)));
         setSponsors(sponsors.map(s => ({
           id: s.id.toString(),
           name: s.name,
           logo: { url: s.logo },
           type: 'sponsor' as const
-        })));
+        } as unknown as Partner)));
         setPickupEvent({
           ...featuredEvent,
+          id: featuredEvent.id.toString(),
           image: { url: featuredEvent.image }
-        } as Event);
+        } as unknown as Event);
       } finally {
         setIsLoading(false);
       }

@@ -89,6 +89,22 @@ export const upcomingEvents = [
     detailDescription: '<p>名古屋会場で開催される選考試験です。</p>',
     target: '大学生、専門学校生、若手社会人',
     capacity: '30名'
+  },
+  {
+    id: 100,
+    title: 'ソフトスキル検定2026',
+    description: 'イベント概要',
+    date: '2026年12月31日',
+    location: '東京都千代田区麹町サイトビル',
+    price: '未定',
+    category: '検定試験',
+    image: 'https://images.unsplash.com/photo-1544531586-fde5298cdd40?q=80&w=2000&auto=format&fit=crop',
+    detailDescription: '<p>詳細説明が入ります。</p>',
+    schedule: '2026年12月31日',
+    target: '全対象',
+    capacity: '100名',
+    organizer: '主催者名',
+    contact: 'contact@example.com'
   }
 ];
 
