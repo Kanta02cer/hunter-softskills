@@ -441,7 +441,7 @@ export default function HomePage() {
                 {upcomingEvents.map((event, index) => (
                   <div 
                     key={event.id}
-                    className="w-[70vw] flex-shrink-0 group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer aspect-square border border-gray-100"
+                    className="w-[60vw] sm:w-[50vw] flex-shrink-0 group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer aspect-square border border-gray-100"
                     onClick={() => openEventModal(event)}
                     data-microcms-field={`upcomingEvents.${index}`}
                   >
@@ -452,40 +452,27 @@ export default function HomePage() {
                       data-microcms-field={`upcomingEvents.${index}.image`}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-90 group-hover:opacity-95 transition-opacity pointer-events-none"></div>
-                    <span className="absolute top-3 right-3 px-3 py-1 bg-[#FF8C00] text-white text-xs font-bold rounded-full shadow-md z-10 pointer-events-none" data-microcms-field={`upcomingEvents.${index}.category`}>
+                    <span className="absolute top-2 right-2 px-2 py-1 bg-[#FF8C00] text-white text-[10px] sm:text-xs font-bold rounded-full shadow-md z-10 pointer-events-none" data-microcms-field={`upcomingEvents.${index}.category`}>
                       {event.category}
                     </span>
-                    <div className="absolute bottom-0 left-0 right-0 p-5 text-white pointer-events-none">
-                      <h3 className="text-lg font-bold mb-2 line-clamp-2" data-microcms-field={`upcomingEvents.${index}.title`}>
+                    <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 text-white pointer-events-none">
+                      <h3 className="text-sm sm:text-base font-bold mb-1 line-clamp-2 leading-tight" data-microcms-field={`upcomingEvents.${index}.title`}>
                         {event.title}
                       </h3>
-                      <p className="text-xs text-white/90 mb-3 line-clamp-2" data-microcms-field={`upcomingEvents.${index}.description`}>
+                      <p className="text-[10px] sm:text-xs text-white/90 mb-2 line-clamp-1" data-microcms-field={`upcomingEvents.${index}.description`}>
                         {event.description}
                       </p>
-                      <div className="space-y-1.5">
+                      <div className="space-y-1">
                         <div className="flex items-center text-white/95">
-                          <div className="w-5 h-5 flex items-center justify-center mr-2 flex-shrink-0">
-                            <i className="ri-calendar-line text-[#FF8C00] text-xs"></i>
-                          </div>
-                          <span className="text-xs" data-microcms-field={`upcomingEvents.${index}.date`}>{event.date}</span>
-                        </div>
-                        <div 
-                          className="flex items-center text-white/95 cursor-pointer hover:text-[#FF8C00] transition-colors pointer-events-auto"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            openLocationInMap(event.location);
-                          }}
-                        >
-                          <div className="w-5 h-5 flex items-center justify-center mr-2 flex-shrink-0">
-                            <i className="ri-map-pin-line text-[#FF8C00] text-xs"></i>
-                          </div>
-                          <span className="text-xs underline line-clamp-1" data-microcms-field={`upcomingEvents.${index}.location`}>{event.location}</span>
+                          <i className="ri-calendar-line text-[#FF8C00] text-xs mr-1.5"></i>
+                          <span className="text-[10px] sm:text-xs" data-microcms-field={`upcomingEvents.${index}.date`}>{event.date}</span>
                         </div>
                         <div className="flex items-center text-white/95">
-                          <div className="w-5 h-5 flex items-center justify-center mr-2 flex-shrink-0">
-                            <i className="ri-price-tag-3-line text-[#FF8C00] text-xs"></i>
-                          </div>
-                          <span className="text-xs font-bold text-[#FF8C00]" data-microcms-field={`upcomingEvents.${index}.price`}>{event.price}</span>
+                          <i className="ri-map-pin-line text-[#FF8C00] text-xs mr-1.5"></i>
+                          <span className="text-[10px] sm:text-xs line-clamp-1" data-microcms-field={`upcomingEvents.${index}.location`}>{event.location}</span>
+                        </div>
+                        <div className="flex items-center text-white/95 mt-1">
+                          <span className="text-xs sm:text-sm font-bold text-[#FF8C00]" data-microcms-field={`upcomingEvents.${index}.price`}>{event.price}</span>
                         </div>
                       </div>
                     </div>
@@ -502,50 +489,39 @@ export default function HomePage() {
                 {upcomingEvents.map((event, index) => (
                   <div 
                     key={event.id}
-                    className="w-[380px] flex-shrink-0 bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 cursor-pointer transform hover:-translate-y-2 border border-gray-100"
+                    className="w-[300px] flex-shrink-0 group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer aspect-square border border-gray-100"
                     onClick={() => openEventModal(event)}
                     data-microcms-field={`upcomingEvents.${index}`}
                   >
-                    <div className="relative w-full aspect-square" data-microcms-field={`upcomingEvents.${index}.image`}>
-                      <img 
-                        src={typeof event.image === 'string' ? event.image : event.image.url}
-                        alt={event.title}
-                        className="w-full h-full object-cover object-top pointer-events-none"
-                      />
-                      <span className="absolute top-4 right-4 px-4 py-1.5 bg-[#FF8C00] text-white text-xs font-bold rounded-full shadow-md z-10 pointer-events-none" data-microcms-field={`upcomingEvents.${index}.category`}>
-                        {event.category}
-                      </span>
-                    </div>
-                    <div className="p-6">
-                      <h3 className="text-xl font-bold mb-3 text-gray-900 line-clamp-2 min-h-[56px]" data-microcms-field={`upcomingEvents.${index}.title`}>
+                    <img 
+                      src={typeof event.image === 'string' ? event.image : event.image.url}
+                      alt={event.title}
+                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-110 pointer-events-none"
+                      data-microcms-field={`upcomingEvents.${index}.image`}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-90 group-hover:opacity-95 transition-opacity pointer-events-none"></div>
+                    <span className="absolute top-4 right-4 px-4 py-1.5 bg-[#FF8C00] text-white text-xs font-bold rounded-full shadow-md z-10 pointer-events-none" data-microcms-field={`upcomingEvents.${index}.category`}>
+                      {event.category}
+                    </span>
+                    <div className="absolute bottom-0 left-0 right-0 p-6 text-white pointer-events-none">
+                      <h3 className="text-xl font-bold mb-2 line-clamp-2 leading-tight" data-microcms-field={`upcomingEvents.${index}.title`}>
                         {event.title}
                       </h3>
-                      <p className="text-sm text-gray-600 mb-5 line-clamp-3 min-h-[60px]" data-microcms-field={`upcomingEvents.${index}.description`}>
+                      <p className="text-sm text-white/90 mb-3 line-clamp-2" data-microcms-field={`upcomingEvents.${index}.description`}>
                         {event.description}
                       </p>
-                      <div className="space-y-2.5">
-                        <div className="flex items-center text-gray-700">
-                          <div className="w-7 h-7 flex items-center justify-center mr-2 bg-orange-50 rounded-lg flex-shrink-0">
-                            <i className="ri-calendar-line text-[#FF8C00] text-sm"></i>
-                          </div>
-                          <span className="text-xs" data-microcms-field={`upcomingEvents.${index}.date`}>{event.date}</span>
+                      <div className="space-y-2">
+                        <div className="flex items-center text-white/95">
+                          <i className="ri-calendar-line text-[#FF8C00] text-sm mr-2"></i>
+                          <span className="text-sm" data-microcms-field={`upcomingEvents.${index}.date`}>{event.date}</span>
                         </div>
-                        <div 
-                          className="flex items-center text-gray-700 cursor-pointer hover:text-[#FF8C00] transition-colors"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            openLocationInMap(event.location);
-                          }}
-                        >
-                          <div className="w-7 h-7 flex items-center justify-center mr-2 bg-orange-50 rounded-lg flex-shrink-0">
-                            <i className="ri-map-pin-line text-[#FF8C00] text-sm"></i>
-                          </div>
-                          <span className="text-xs underline" data-microcms-field={`upcomingEvents.${index}.location`}>{event.location}</span>
+                        <div className="flex items-center text-white/95">
+                          <i className="ri-map-pin-line text-[#FF8C00] text-sm mr-2"></i>
+                          <span className="text-sm line-clamp-1" data-microcms-field={`upcomingEvents.${index}.location`}>{event.location}</span>
                         </div>
-                      </div>
-                      <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                        <span className="text-base font-bold text-[#FF8C00]" data-microcms-field={`upcomingEvents.${index}.price`}>{event.price}</span>
-                        <Button size="sm">詳細を見る</Button>
+                        <div className="flex items-center text-white/95 mt-2">
+                          <span className="text-base font-bold text-[#FF8C00]" data-microcms-field={`upcomingEvents.${index}.price`}>{event.price}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -573,7 +549,7 @@ export default function HomePage() {
                 {pastEvents.map((event, index) => (
                   <div 
                     key={event.id}
-                    className="w-[70vw] flex-shrink-0 group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer aspect-square border border-gray-100"
+                    className="w-[60vw] sm:w-[50vw] flex-shrink-0 group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer aspect-square border border-gray-100"
                     onClick={() => openPastEventDetail(event)}
                     data-microcms-field={`pastEvents.${index}`}
                   >
@@ -584,9 +560,9 @@ export default function HomePage() {
                       data-microcms-field={`pastEvents.${index}.image`}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity pointer-events-none"></div>
-                    <div className="absolute bottom-0 left-0 right-0 p-5 text-white pointer-events-none">
-                      <p className="text-xs mb-2 text-[#FF8C00] font-bold" data-microcms-field={`pastEvents.${index}.date`}>{event.date}</p>
-                      <h3 className="text-lg font-bold line-clamp-2" data-microcms-field={`pastEvents.${index}.title`}>{event.title}</h3>
+                    <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 text-white pointer-events-none">
+                      <p className="text-[10px] sm:text-xs mb-1 text-[#FF8C00] font-bold" data-microcms-field={`pastEvents.${index}.date`}>{event.date}</p>
+                      <h3 className="text-sm sm:text-base font-bold line-clamp-2 leading-tight" data-microcms-field={`pastEvents.${index}.title`}>{event.title}</h3>
                     </div>
                   </div>
                 ))}
