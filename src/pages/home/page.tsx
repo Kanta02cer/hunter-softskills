@@ -547,8 +547,10 @@ export default function HomePage() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity pointer-events-none"></div>
                     <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 text-white pointer-events-none">
-                      <p className="text-[10px] sm:text-xs mb-1 text-[#FF8C00] font-bold" data-microcms-field={`pastEvents.${index}.date`}>{event.date}</p>
-                      <h3 className="text-sm sm:text-base font-bold line-clamp-2 leading-tight" data-microcms-field={`pastEvents.${index}.title`}>{event.title}</h3>
+                      <div className="flex items-center gap-2 mb-1">
+                        <p className="text-[10px] sm:text-xs text-[#FF8C00] font-bold" data-microcms-field={`pastEvents.${index}.date`}>{event.date}</p>
+                      </div>
+                      <h3 className="text-sm sm:text-base font-bold line-clamp-2 leading-tight mb-1" data-microcms-field={`pastEvents.${index}.title`}>{event.title}</h3>
                     </div>
                   </div>
                 ))}
@@ -563,7 +565,7 @@ export default function HomePage() {
                 {pastEvents.map((event, index) => (
                   <div 
                     key={event.id}
-                    className="w-[380px] flex-shrink-0 group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer aspect-video border border-gray-100 transform hover:-translate-y-2 transition-all duration-300"
+                    className="w-[300px] flex-shrink-0 group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer aspect-square border border-gray-100 transform hover:-translate-y-2 transition-all duration-300"
                     onClick={() => openPastEventDetail(event)}
                     data-microcms-field={`pastEvents.${index}`}
                   >
@@ -576,8 +578,10 @@ export default function HomePage() {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity pointer-events-none"></div>
                       <div className="absolute bottom-0 left-0 right-0 p-6 text-white pointer-events-none">
-                        <p className="text-sm mb-2 text-[#FF8C00] font-bold" data-microcms-field={`pastEvents.${index}.date`}>{event.date}</p>
-                        <h3 className="text-xl font-bold" data-microcms-field={`pastEvents.${index}.title`}>{event.title}</h3>
+                        <div className="flex items-center gap-3 mb-2">
+                          <p className="text-sm text-[#FF8C00] font-bold" data-microcms-field={`pastEvents.${index}.date`}>{event.date}</p>
+                        </div>
+                        <h3 className="text-xl font-bold mb-2 line-clamp-2 leading-tight" data-microcms-field={`pastEvents.${index}.title`}>{event.title}</h3>
                       </div>
                     </div>
                   </div>
