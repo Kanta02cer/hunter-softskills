@@ -7,7 +7,7 @@ import i18n from "./i18n";
 function App() {
   return (
     <I18nextProvider i18n={i18n}>
-      <HashRouter basename={import.meta.env.BASE_URL}>
+      <HashRouter>
         <AppRoutes />
       </HashRouter>
     </I18nextProvider>
