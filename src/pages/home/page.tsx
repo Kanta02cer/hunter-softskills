@@ -4,7 +4,7 @@ import Footer from '../../components/feature/Footer';
 import Button from '../../components/base/Button';
 import { getUpcomingEvents, getPastEvents, getNewsItems, getPartners, getPickupEvent, type Event, type NewsItem, type Partner, type PastEvent } from '../../lib/microcms';
 import { upcomingEvents as mockUpcomingEvents, pastEvents as mockPastEvents, newsItems as mockNewsItems, featuredEvent } from '../../mocks/events';
-import { sponsors, mockPartners } from '../../mocks/partners';
+import { sponsors as mockSponsors, mockPartners } from '../../mocks/partners';
 
 export default function HomePage() {
   const [showEventModal, setShowEventModal] = useState(false);
@@ -77,7 +77,7 @@ export default function HomePage() {
           setSponsors(sponsorsList);
         } else {
           // microCMSにsponsorがない場合はモックデータを使用
-          setSponsors(sponsors.map(s => ({
+          setSponsors(mockSponsors.map(s => ({
             id: s.id.toString(),
             name: s.name,
             logo: { url: s.logo },
@@ -148,7 +148,7 @@ export default function HomePage() {
           logo: { url: p.logo },
           type: 'partner' as const
         } as unknown as Partner)));
-        setSponsors(sponsors.map(s => ({
+        setSponsors(mockSponsors.map(s => ({
           id: s.id.toString(),
           name: s.name,
           logo: { url: s.logo },
@@ -340,14 +340,13 @@ export default function HomePage() {
             <div className="w-20 sm:w-24 h-1.5 bg-[#FF8C00] mx-auto"></div>
           </div>
 
-          {pickupEvent && (
             <div className="flex justify-center">
               <div 
-                className="w-full max-w-[380px] bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 cursor-pointer transform hover:-translate-y-2 border border-gray-100 flex flex-col"
+                className="w-full max-w-4xl bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 cursor-pointer border border-gray-100 flex flex-col"
                 onClick={() => window.REACT_APP_NAVIGATE(`/event-detail?id=${pickupEvent.id}`)}
                 data-microcms-field="pickupEvent"
               >
-                <div className="relative w-full aspect-video flex-shrink-0 bg-gray-100">
+                <div className="relative w-full aspect-video md:aspect-[19/6] flex-shrink-0 bg-gray-100">
                   {(() => {
                     const imageUrl = typeof pickupEvent.image === 'string' 
                       ? pickupEvent.image 
@@ -363,8 +362,6 @@ export default function HomePage() {
                           data-microcms-field="pickupEvent.image"
                           onError={(e) => {
                             console.error('❌ 画像の読み込みに失敗:', pickupEvent.image);
-                            console.error('❌ 画像URL:', imageUrl);
-                            // 画像読み込み失敗時はプレースホルダーを表示
                             const target = e.target as HTMLImageElement;
                             target.style.display = 'none';
                             if (target.parentElement) {
@@ -375,13 +372,9 @@ export default function HomePage() {
                               `;
                             }
                           }}
-                          onLoad={() => {
-                            console.log('✅ 画像の読み込み成功:', imageUrl);
-                          }}
                         />
                       );
                     } else {
-                      // 画像URLが存在しない場合はプレースホルダーを表示
                       return (
                         <div className="w-full h-full flex items-center justify-center bg-gray-200 text-gray-400">
                           <span className="text-sm">画像が設定されていません</span>
@@ -394,11 +387,11 @@ export default function HomePage() {
                   </span>
                 </div>
                 
-                <div className="p-6 flex-1 flex flex-col">
-                  <h3 className="text-xl font-bold mb-3 text-gray-900 line-clamp-2 min-h-[56px]" data-microcms-field="pickupEvent.title">
+                <div className="p-6 md:p-8 flex-1 flex flex-col">
+                  <h3 className="text-xl md:text-2xl font-bold mb-3 text-gray-900" data-microcms-field="pickupEvent.title">
                     {pickupEvent.title}
                   </h3>
-                  <p className="text-sm text-gray-600 mb-5 line-clamp-3 min-h-[60px]" data-microcms-field="pickupEvent.description">
+                  <p className="text-sm md:text-base text-gray-600 mb-5 line-clamp-3" data-microcms-field="pickupEvent.description">
                     {pickupEvent.description}
                   </p>
                   <div className="space-y-2.5 mb-4">
@@ -406,7 +399,7 @@ export default function HomePage() {
                       <div className="w-7 h-7 flex items-center justify-center mr-2 bg-orange-50 rounded-lg flex-shrink-0">
                         <i className="ri-calendar-line text-[#FF8C00] text-sm"></i>
                       </div>
-                      <span className="text-xs" data-microcms-field="pickupEvent.date">{pickupEvent.date}</span>
+                      <span className="text-sm font-medium" data-microcms-field="pickupEvent.date">{pickupEvent.date}</span>
                     </div>
                     <div 
                       className="flex items-center text-gray-700 cursor-pointer hover:text-[#FF8C00] transition-colors"
@@ -418,17 +411,16 @@ export default function HomePage() {
                       <div className="w-7 h-7 flex items-center justify-center mr-2 bg-orange-50 rounded-lg flex-shrink-0">
                         <i className="ri-map-pin-line text-[#FF8C00] text-sm"></i>
                       </div>
-                      <span className="text-xs underline" data-microcms-field="pickupEvent.location">{pickupEvent.location}</span>
+                      <span className="text-sm underline" data-microcms-field="pickupEvent.location">{pickupEvent.location}</span>
                     </div>
                   </div>
                   <div className="flex items-center justify-between pt-4 border-t border-gray-100 mt-auto">
-                    <span className="text-base font-bold text-[#FF8C00]" data-microcms-field="pickupEvent.price">{pickupEvent.price}</span>
-                    <Button size="sm">詳細を見る</Button>
+                    <span className="text-lg font-bold text-[#FF8C00]" data-microcms-field="pickupEvent.price">{pickupEvent.price}</span>
+                    <Button>詳細を見る</Button>
                   </div>
                 </div>
               </div>
             </div>
-          )}
         </div>
       </section>
 
@@ -449,7 +441,7 @@ export default function HomePage() {
                 {upcomingEvents.map((event, index) => (
                   <div 
                     key={event.id}
-                    className="w-[85vw] flex-shrink-0 group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer aspect-video border border-gray-100"
+                    className="w-[70vw] flex-shrink-0 group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer aspect-square border border-gray-100"
                     onClick={() => openEventModal(event)}
                     data-microcms-field={`upcomingEvents.${index}`}
                   >
@@ -514,7 +506,7 @@ export default function HomePage() {
                     onClick={() => openEventModal(event)}
                     data-microcms-field={`upcomingEvents.${index}`}
                   >
-                    <div className="relative w-full aspect-video" data-microcms-field={`upcomingEvents.${index}.image`}>
+                    <div className="relative w-full aspect-square" data-microcms-field={`upcomingEvents.${index}.image`}>
                       <img 
                         src={typeof event.image === 'string' ? event.image : event.image.url}
                         alt={event.title}
@@ -581,7 +573,7 @@ export default function HomePage() {
                 {pastEvents.map((event, index) => (
                   <div 
                     key={event.id}
-                    className="w-[85vw] flex-shrink-0 group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer aspect-video border border-gray-100"
+                    className="w-[70vw] flex-shrink-0 group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer aspect-square border border-gray-100"
                     onClick={() => openPastEventDetail(event)}
                     data-microcms-field={`pastEvents.${index}`}
                   >
@@ -613,16 +605,18 @@ export default function HomePage() {
                     onClick={() => openPastEventDetail(event)}
                     data-microcms-field={`pastEvents.${index}`}
                   >
-                    <img 
-                      src={typeof event.image === 'string' ? event.image : event.image.url}
-                      alt={event.title}
-                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-110 pointer-events-none"
-                      data-microcms-field={`pastEvents.${index}.image`}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity pointer-events-none"></div>
-                    <div className="absolute bottom-0 left-0 right-0 p-6 text-white pointer-events-none">
-                      <p className="text-sm mb-2 text-[#FF8C00] font-bold" data-microcms-field={`pastEvents.${index}.date`}>{event.date}</p>
-                      <h3 className="text-xl font-bold" data-microcms-field={`pastEvents.${index}.title`}>{event.title}</h3>
+                    <div className="relative w-full aspect-square">
+                      <img 
+                        src={typeof event.image === 'string' ? event.image : event.image.url}
+                        alt={event.title}
+                        className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-110 pointer-events-none"
+                        data-microcms-field={`pastEvents.${index}.image`}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity pointer-events-none"></div>
+                      <div className="absolute bottom-0 left-0 right-0 p-6 text-white pointer-events-none">
+                        <p className="text-sm mb-2 text-[#FF8C00] font-bold" data-microcms-field={`pastEvents.${index}.date`}>{event.date}</p>
+                        <h3 className="text-xl font-bold" data-microcms-field={`pastEvents.${index}.title`}>{event.title}</h3>
+                      </div>
                     </div>
                   </div>
                 ))}
