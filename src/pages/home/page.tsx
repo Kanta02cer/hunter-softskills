@@ -343,11 +343,11 @@ export default function HomePage() {
           {pickupEvent && (
             <div className="flex justify-center">
               <div 
-                className="w-full max-w-[380px] aspect-square bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 cursor-pointer transform hover:-translate-y-2 border border-gray-100 flex flex-col"
+                className="w-full max-w-[380px] bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 cursor-pointer transform hover:-translate-y-2 border border-gray-100 flex flex-col"
                 onClick={() => window.REACT_APP_NAVIGATE(`/event-detail?id=${pickupEvent.id}`)}
                 data-microcms-field="pickupEvent"
               >
-                <div className="relative h-40 flex-shrink-0 bg-gray-100">
+                <div className="relative w-full aspect-video flex-shrink-0 bg-gray-100">
                   {(() => {
                     const imageUrl = typeof pickupEvent.image === 'string' 
                       ? pickupEvent.image 
@@ -449,7 +449,7 @@ export default function HomePage() {
                 {upcomingEvents.map((event, index) => (
                   <div 
                     key={event.id}
-                    className="w-[85vw] flex-shrink-0 group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer aspect-square border border-gray-100"
+                    className="w-[85vw] flex-shrink-0 group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer aspect-video border border-gray-100"
                     onClick={() => openEventModal(event)}
                     data-microcms-field={`upcomingEvents.${index}`}
                   >
@@ -514,7 +514,7 @@ export default function HomePage() {
                     onClick={() => openEventModal(event)}
                     data-microcms-field={`upcomingEvents.${index}`}
                   >
-                    <div className="relative h-56" data-microcms-field={`upcomingEvents.${index}.image`}>
+                    <div className="relative w-full aspect-video" data-microcms-field={`upcomingEvents.${index}.image`}>
                       <img 
                         src={typeof event.image === 'string' ? event.image : event.image.url}
                         alt={event.title}
@@ -581,7 +581,7 @@ export default function HomePage() {
                 {pastEvents.map((event, index) => (
                   <div 
                     key={event.id}
-                    className="w-[85vw] flex-shrink-0 group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer aspect-square border border-gray-100"
+                    className="w-[85vw] flex-shrink-0 group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer aspect-video border border-gray-100"
                     onClick={() => openPastEventDetail(event)}
                     data-microcms-field={`pastEvents.${index}`}
                   >
@@ -609,7 +609,7 @@ export default function HomePage() {
                 {pastEvents.map((event, index) => (
                   <div 
                     key={event.id}
-                    className="w-[380px] flex-shrink-0 group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer aspect-square border border-gray-100 transform hover:-translate-y-2 transition-all duration-300"
+                    className="w-[380px] flex-shrink-0 group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer aspect-video border border-gray-100 transform hover:-translate-y-2 transition-all duration-300"
                     onClick={() => openPastEventDetail(event)}
                     data-microcms-field={`pastEvents.${index}`}
                   >
